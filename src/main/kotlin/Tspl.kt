@@ -3,10 +3,10 @@ import algorithm.Population
 import algorithm.RouteManager
 import readers.CsvReader
 
-class Tspl(private val file: String, private val generations: Int = 100, private val populationSize: Int = 50, private val doDebug: Boolean = false) {
+object Tspl {
 
 
-    fun evolve(): Population{
+    fun run(file: String, generations: Int = 200, populationSize: Int = 50, doDebug: Boolean = false): Population{
         val startTime = System.currentTimeMillis()
 
         val cities = CsvReader.readFile(file, ',')
@@ -34,8 +34,6 @@ class Tspl(private val file: String, private val generations: Int = 100, private
         return pop
     }
 
+    const val MILLIS_IN_SECOND = 1000.0
 
-    companion object {
-        const val MILLIS_IN_SECOND = 1000.0
-    }
 }
