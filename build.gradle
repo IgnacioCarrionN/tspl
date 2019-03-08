@@ -4,7 +4,7 @@ plugins {
     id 'maven'
 }
 
-group 'com.github.IgncioCarrionN'
+group 'com.github.IgnacioCarrionN'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
