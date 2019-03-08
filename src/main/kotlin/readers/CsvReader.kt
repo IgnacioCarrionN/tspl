@@ -7,7 +7,9 @@ object CsvReader {
 
     fun readFile(fileName: String, separator: Char):List<City>{
         val result = mutableListOf<City>()
-        val file = File(CsvReader.javaClass.classLoader.getResource(fileName).path)
+        println(fileName)
+        //val path = this.javaClass.classLoader.getResource(fileName).path
+        val file = File("/home/casa/IntelliJIDEAProjects/tspl/src/main/resources/cities.csv")
         println(file.path)
         file.forEachLine {
             val city = parseLine(it, separator)
