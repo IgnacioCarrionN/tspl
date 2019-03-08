@@ -1,4 +1,4 @@
-package algorithm
+package com.github.IgnacioCarrionN.algorithm
 
 class Population(populationSize: Int, initialize: Boolean) {
     val routes: Array<Route> = Array(populationSize) {Route()}

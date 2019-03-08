@@ -1,6 +1,6 @@
-package readers
+package com.github.IgnacioCarrionN.readers
 
-import algorithm.City
+import com.github.IgnacioCarrionN.algorithm.City
 import java.io.File
 
 object CsvReader {

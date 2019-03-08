@@ -1,4 +1,4 @@
-package algorithm
+package com.github.IgnacioCarrionN.algorithm
 
 class Route(val route: MutableList<City> = MutableList(RouteManager.numberOfCities()){City(-1,-1)}) {
 

@@ -1,4 +1,4 @@
-package algorithm
+package com.github.IgnacioCarrionN.algorithm
 
 import kotlin.random.Random
 

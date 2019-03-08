@@ -1,4 +1,4 @@
-package algorithm
+package com.github.IgnacioCarrionN.algorithm
 
 object RouteManager {
     private val destinationCities: MutableList<City> = mutableListOf()
