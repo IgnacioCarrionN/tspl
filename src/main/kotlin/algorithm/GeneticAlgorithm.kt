@@ -1,9 +1,5 @@
 package algorithm
 
-import javafx.beans.property.SimpleListProperty
-import javafx.collections.FXCollections
-import javafx.collections.ObservableList
-import tornadofx.observable
 import kotlin.random.Random
 
 object GeneticAlgorithm {
@@ -12,8 +8,6 @@ object GeneticAlgorithm {
     const val TOURNAMENT_SIZE = 5
     const val ELITISM = true
 
-    val fittestList: MutableList<Route> = mutableListOf()
-    val fittestObservable: ObservableList<Route> = mutableListOf<Route>().observable()
 
 
     fun evolvePopulation(pop: Population): Population{
@@ -39,7 +33,6 @@ object GeneticAlgorithm {
         }
 
 
-        fittestObservable.add(newPopulation.getFittest())
         println(newPopulation.getFittest().distance)
 
 
