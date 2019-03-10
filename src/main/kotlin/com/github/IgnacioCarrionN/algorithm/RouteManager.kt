@@ -1,22 +1,22 @@
 package com.github.IgnacioCarrionN.algorithm
 
-object RouteManager {
+class RouteManager {
     private val destinationCities: MutableList<City> = mutableListOf()
 
-    fun addCity(city: City){
+    internal fun addCity(city: City){
         destinationCities.add(city)
     }
 
-    fun addCities(cities: List<City>){
+    internal fun addCities(cities: List<City>){
         destinationCities.clear()
         destinationCities.addAll(cities)
     }
 
-    fun getCity(index: Int): City {
+    internal fun getCity(index: Int): City {
         return destinationCities[index]
     }
 
-    fun numberOfCities(): Int {
+    internal fun numberOfCities(): Int {
         return destinationCities.size
     }
 }

@@ -2,16 +2,16 @@ package com.github.IgnacioCarrionN.algorithm
 
 import kotlin.random.Random
 
-object GeneticAlgorithm {
+internal object GeneticAlgorithm {
 
     const val MUTATION_RATE = 0.015
-    const val TOURNAMENT_SIZE = 5
+    const val TOURNAMENT_SIZE = 10
     const val ELITISM = true
 
 
 
-    fun evolvePopulation(pop: Population): Population{
-        val newPopulation = Population(pop.getPopulationSize(), false)
+    fun evolvePopulation(pop: Population, routeManager: RouteManager): Population{
+        val newPopulation = Population(pop.getPopulationSize(), false, routeManager)
 
         val elitismOffset = if(ELITISM) {
             newPopulation.saveRoute(0, pop.getFittest())
@@ -21,10 +21,11 @@ object GeneticAlgorithm {
         }
 
         for(i in elitismOffset until newPopulation.getPopulationSize()){
-            val parent1 = tournamentSelection(pop)
-            val parent2 = tournamentSelection(pop)
 
-            val child = crossover(parent1, parent2)
+            val parent1 = tournamentSelection(pop, routeManager)
+            val parent2 = tournamentSelection(pop, routeManager)
+
+            val child = crossover(parent1, parent2, routeManager)
             newPopulation.saveRoute(i, child)
         }
 
@@ -33,18 +34,17 @@ object GeneticAlgorithm {
         }
 
 
-        println(newPopulation.getFittest().distance)
-
-
         return newPopulation
 
     }
 
-    fun crossover(parent1: Route, parent2: Route): Route {
-        val child = Route()
+    private fun crossover(parent1: Route, parent2: Route, routeManager: RouteManager): Route {
+        val child = Route(routeManager)
+
 
         val startPos = Random.nextInt(parent1.route.size)
         val endPos = Random.nextInt(parent1.route.size)
+
 
         for(i in 0 until child.route.size){
             if(startPos < endPos && i > startPos && i < endPos){
@@ -69,7 +69,7 @@ object GeneticAlgorithm {
         return child
     }
 
-    fun mutate(route: Route) {
+    private fun mutate(route: Route) {
         for(routePos1 in 0 until route.route.size){
             if(Random.nextDouble() < MUTATION_RATE){
                 val routePos2 = Random.nextInt(route.route.size)
@@ -83,8 +83,9 @@ object GeneticAlgorithm {
         }
     }
 
-    fun tournamentSelection(pop: Population): Route {
-        val tournamentPop = Population(TOURNAMENT_SIZE, false)
+    private fun tournamentSelection(pop: Population, routeManager: RouteManager): Route {
+        val tournamentPop = Population(TOURNAMENT_SIZE, false, routeManager)
+
         for(i in 0 until TOURNAMENT_SIZE){
             val randomId = Random.nextInt(pop.getPopulationSize())
             tournamentPop.saveRoute(i, pop.getRoute(randomId))
@@ -92,4 +93,5 @@ object GeneticAlgorithm {
 
         return tournamentPop.getFittest()
     }
+
 }

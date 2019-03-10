@@ -1,11 +1,14 @@
 package com.github.IgnacioCarrionN.algorithm
 
-class Route(val route: MutableList<City> = MutableList(RouteManager.numberOfCities()){City(-1,-1)}) {
+class Route(private val routeManager: RouteManager) {
 
-    var fitness: Double = 0.0
+    val route: MutableList<City> = MutableList(routeManager.numberOfCities()){City(-1,-1)}
+
+    internal var fitness: Double = 0.0
         get() {
-            if(field == 0.0)
+            if(field == 0.0){
                 fitness = 1/distance.toDouble()
+            }
             return field
         }
     var distance: Int = 0
@@ -23,9 +26,9 @@ class Route(val route: MutableList<City> = MutableList(RouteManager.numberOfCiti
             return field
         }
 
-    fun generateIndividual(){
-        for(i in 0 until RouteManager.numberOfCities()){
-            setCity(i, RouteManager.getCity(i))
+    internal fun generateIndividual(){
+        for(i in 0 until routeManager.numberOfCities()){
+            setCity(i, routeManager.getCity(i))
         }
         route.shuffle()
     }
@@ -34,7 +37,7 @@ class Route(val route: MutableList<City> = MutableList(RouteManager.numberOfCiti
         return route[routePosition]
     }
 
-    fun setCity(routePosition: Int, city: City) {
+    internal fun setCity(routePosition: Int, city: City) {
         route[routePosition] = city
         fitness = 0.0
         distance = 0

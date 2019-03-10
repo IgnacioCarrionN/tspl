@@ -1,12 +1,12 @@
 package com.github.IgnacioCarrionN.algorithm
 
-class Population(populationSize: Int, initialize: Boolean) {
-    val routes: Array<Route> = Array(populationSize) {Route()}
+class Population(populationSize: Int, initialize: Boolean, routeManager: RouteManager) {
+    private val routes: Array<Route> = Array(populationSize) {Route(routeManager)}
 
     init {
         if(initialize){
             for(i in 0 until populationSize){
-                val newRoute = Route()
+                val newRoute = Route(routeManager)
                 newRoute.generateIndividual()
                 routes[i] = newRoute
             }
@@ -27,8 +27,8 @@ class Population(populationSize: Int, initialize: Boolean) {
         return fittest
     }
 
-    fun getPopulationSize() = routes.size
-    fun saveRoute(index: Int, route: Route) {
+    internal fun getPopulationSize() = routes.size
+    internal fun saveRoute(index: Int, route: Route) {
         routes[index] = route
     }
 }

@@ -1,26 +1,36 @@
 package com.github.IgnacioCarrionN
 
-import com.github.IgnacioCarrionN.algorithm.GeneticAlgorithm
-import com.github.IgnacioCarrionN.algorithm.Population
-import com.github.IgnacioCarrionN.algorithm.RouteManager
-import com.github.IgnacioCarrionN.readers.CsvReader
+import com.github.IgnacioCarrionN.algorithm.*
+import com.github.IgnacioCarrionN.readers.CityFileReader
 
-object Tspl {
+class Tspl(private val handler: OnAlgorithmRunning? = null) {
 
+    private var doDebug = false
 
-    fun run(file: String, generations: Int = 200, populationSize: Int = 50, doDebug: Boolean = false): Population {
+    // Return null if an error occurred reading input data.
+    fun run(file: String, generations: Int = 200, populationSize: Int = 50, doDebug: Boolean = false): PopulationResult {
+        this.doDebug = doDebug
         val startTime = System.currentTimeMillis()
 
-        val cities = CsvReader.readFile(file, ',')
+        return when(val result = CityFileReader.readFile(file)){
 
-        RouteManager.addCities(cities)
+            is CityDeserializeResult.Success ->
+                PopulationResult.Success(citiesRead(result.cities, populationSize, generations, startTime))
+            is CityDeserializeResult.Error -> PopulationResult.Error(result.message)
+        }
+    }
 
-        var pop = Population(populationSize, true)
+    private fun citiesRead(cities: List<City>, populationSize: Int, generations: Int, startTime: Long): Population {
+        val routeManager = RouteManager()
+        routeManager.addCities(cities)
+
+        var pop = Population(populationSize, true, routeManager)
         if(doDebug)
             println("Initial distance: ${pop.getFittest().distance}")
 
         for(i in 0 until generations) {
-            pop = GeneticAlgorithm.evolvePopulation(pop)
+            pop = GeneticAlgorithm.evolvePopulation(pop, routeManager)
+            handler?.onGenerationEnd(pop)
         }
 
         val endTime = System.currentTimeMillis()
@@ -36,6 +46,11 @@ object Tspl {
         return pop
     }
 
-    const val MILLIS_IN_SECOND = 1000.0
+    interface OnAlgorithmRunning {
+        fun onGenerationEnd(pop: Population)
+    }
 
+    private companion object {
+        const val MILLIS_IN_SECOND = 1000.0
+    }
 }
