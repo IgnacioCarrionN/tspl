@@ -13,7 +13,7 @@ class TestInterface : Tspl.OnAlgorithmRunning{
 
     fun runAlgo(){
         val tspl = Tspl(this)
-        when(val answer = tspl.run("/home/casa/IntelliJIDEAProjects/tspl/src/main/resources/cities.json", 5000, doDebug = true)){
+        when(val answer = tspl.run("/home/casa/IntelliJIDEAProjects/tspl/src/main/resources/cities.json", 20, doDebug = true)){
 
             is PopulationResult.Success -> println(answer.pop.getFittest().distance)
             is PopulationResult.Error -> println(answer.message)

@@ -8,7 +8,6 @@ class RouteManager {
     }
 
     internal fun addCities(cities: List<City>){
-        destinationCities.clear()
         destinationCities.addAll(cities)
     }
 

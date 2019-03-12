@@ -17,7 +17,9 @@ class Route(private val routeManager: RouteManager) {
                 var routeDistance = 0.0
                 for(i in 0 until route.size){
                     val fromCity = getCity(i)
-                    val toCity = if(i +1 < route.size) getCity(i+1) else getCity(0)
+                    val toCity =
+                        if(i +1 < route.size) getCity(i+1)
+                        else getCity(0)
 
                     routeDistance += fromCity.distanceTo(toCity)
                 }
@@ -33,9 +35,7 @@ class Route(private val routeManager: RouteManager) {
         route.shuffle()
     }
 
-    fun getCity(routePosition: Int): City{
-        return route[routePosition]
-    }
+    fun getCity(routePosition: Int): City = route[routePosition]
 
     internal fun setCity(routePosition: Int, city: City) {
         route[routePosition] = city
@@ -43,9 +43,8 @@ class Route(private val routeManager: RouteManager) {
         distance = 0
     }
 
-    fun containsCity(city: City): Boolean {
-        return route.contains(city)
-    }
+    fun containsCity(city: City): Boolean = route.contains(city)
+
 
     override fun toString(): String {
         val builder = StringBuilder()

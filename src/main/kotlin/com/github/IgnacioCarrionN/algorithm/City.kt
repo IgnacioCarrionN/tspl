@@ -1,6 +1,7 @@
 package com.github.IgnacioCarrionN.algorithm
 
 import com.dslplatform.json.*
+import kotlin.math.absoluteValue
 import kotlin.math.pow
 import kotlin.random.Random
 
@@ -22,8 +23,8 @@ class City(
 
 
     fun distanceTo(city: City): Double {
-        val xDistance = Math.abs(x - city.x.toDouble())
-        val yDistance = Math.abs(y - city.y.toDouble())
+        val xDistance = (x - city.x.toDouble()).absoluteValue
+        val yDistance = (y - city.y.toDouble()).absoluteValue
         return Math.sqrt(xDistance.pow(2) + yDistance.pow(2))
     }
 

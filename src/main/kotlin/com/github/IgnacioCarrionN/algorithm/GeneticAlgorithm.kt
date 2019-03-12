@@ -4,9 +4,9 @@ import kotlin.random.Random
 
 internal object GeneticAlgorithm {
 
-    const val MUTATION_RATE = 0.015
-    const val TOURNAMENT_SIZE = 10
-    const val ELITISM = true
+    private const val MUTATION_RATE = 0.015
+    private const val TOURNAMENT_SIZE = 10
+    private const val ELITISM = true
 
 
 
@@ -55,11 +55,11 @@ internal object GeneticAlgorithm {
             }
         }
 
-        for(i in 0 until parent2.route.size){
-            if(!child.containsCity(parent2.getCity(i))){
-                for(spare in 0 until child.route.size){
+        for(city in parent2.route){
+            if(!child.containsCity(city)){
+                for(spare in child.route.indices){
                     if(child.getCity(spare).x == -1){
-                        child.setCity(spare, parent2.getCity(i))
+                        child.setCity(spare, city)
                         break
                     }
                 }
@@ -75,10 +75,10 @@ internal object GeneticAlgorithm {
                 val routePos2 = Random.nextInt(route.route.size)
 
                 val city1 = route.getCity(routePos1)
-                val citi2 = route.getCity(routePos2)
+                val city2 = route.getCity(routePos2)
 
                 route.setCity(routePos2, city1)
-                route.setCity(routePos1, citi2)
+                route.setCity(routePos1, city2)
             }
         }
     }

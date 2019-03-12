@@ -15,4 +15,13 @@ class CityTest {
         assert(distance == 3.0)
     }
 
+    @Test
+    fun toStringTest(){
+        val city = City(3, 15)
+
+        val cityString = "(3, 15)"
+
+        assert(city.toString() == cityString)
+    }
+
 }
